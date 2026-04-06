@@ -1,6 +1,5 @@
 import_config: config.yaml
 projects:
-  PyTorchLightning:
   airbyte:
   airflow:
   dagster:
