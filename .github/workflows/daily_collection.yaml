@@ -25,7 +25,7 @@ jobs:
       run: |
         uv run gitmetrics collect -q \
           --add-metrics \
-          --config-file daily.yaml \
+          --config-file daily_summarization_config.yaml \
           --token ${{ secrets.GITHUB_TOKEN }} \
           --output-folder ${{ secrets.OUTPUT_FOLDER }}
       env:

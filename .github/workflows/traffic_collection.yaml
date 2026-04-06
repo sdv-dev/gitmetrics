@@ -23,7 +23,7 @@ jobs:
     - name: Collect GitHub Traffic Data
       run: |
         uv run gitmetrics traffic \
-          --config-file traffic_config.yaml \
+          --config-file traffic_project_definitions.yaml \
           --token ${{ secrets.GH_TOKEN }} \
           --output-folder ${{ secrets.OUTPUT_FOLDER }}
       env:

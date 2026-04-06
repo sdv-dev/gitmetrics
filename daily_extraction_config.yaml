@@ -1,4 +1,4 @@
-import_config: config.yaml
+import_config: project_definitions.yaml
 projects:
   sdv-dev:
   gretel:

@@ -195,7 +195,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='config.yaml',
+        default='project_definitions.yaml',
         help='Path to the configuration file.',
     )
     collect.add_argument(
@@ -221,7 +221,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='config.yaml',
+        default='project_definitions.yaml',
         help='Path to the configuration file.',
     )
     consolidate.add_argument(
@@ -249,7 +249,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='traffic_config.yaml',
+        default='traffic_project_definitions.yaml',
         help='Path to the configuration file.',
     )
     traffic.add_argument(
@@ -273,7 +273,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='summarize_config.yaml',
+        default='summarize_project_definitions.yaml',
         help='Path to the configuration file.',
     )
     summarize.add_argument(
