@@ -15,6 +15,8 @@ from gitmetrics.summarize import summarize_metrics
 
 LOGGER = logging.getLogger(__name__)
 
+DEFAULT_PROJECT_DEFINITIONS = 'project_definitions.yaml'
+
 
 def _env_setup(logfile, verbosity):
     warnings.simplefilter('ignore')
@@ -195,7 +197,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='project_definitions.yaml',
+        default=DEFAULT_PROJECT_DEFINITIONS,
         help='Path to the configuration file.',
     )
     collect.add_argument(
@@ -221,7 +223,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='project_definitions.yaml',
+        default=DEFAULT_PROJECT_DEFINITIONS,
         help='Path to the configuration file.',
     )
     consolidate.add_argument(
