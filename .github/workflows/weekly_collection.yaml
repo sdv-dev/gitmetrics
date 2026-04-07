@@ -24,7 +24,7 @@ jobs:
       run: |
         uv run gitmetrics collect -q \
           --add-metrics \
-          --config-file weekly.yaml \
+          --config-file weekly_extraction_config.yaml \
           --token ${{ secrets.GITHUB_TOKEN }} \
           --output-folder ${{ secrets.OUTPUT_FOLDER }}
       env:
@@ -32,7 +32,7 @@ jobs:
     - name: Consolidate GitHub Data
       run: |
         uv run gitmetrics consolidate \
-          --config-file weekly.yaml \
+          --config-file weekly_extraction_config.yaml \
           --output-folder ${{ secrets.OUTPUT_FOLDER }}
       env:
         PYDRIVE_CREDENTIALS: ${{ secrets.PYDRIVE_CREDENTIALS }}

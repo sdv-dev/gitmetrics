@@ -14,7 +14,7 @@ from gitmetrics.constants import (
 )
 from gitmetrics.output import create_spreadsheet, load_spreadsheet
 
-OUTPUT_FILENAME = 'Consolidated_Overview'
+OUTPUT_FILENAME = 'gitmetrics_consolidated_summary_to_date'
 SHEET_NAME = 'Overview'
 
 LOGGER = logging.getLogger(__name__)

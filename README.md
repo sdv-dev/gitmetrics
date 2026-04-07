@@ -65,7 +65,7 @@ Collect metrics from GitHub by running `gitmetrics` on your computer. You need t
 
 1. A GitHub Token. Documentation about how to create a Personal Access Token can be found
    [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-2. A list of GitHub Repositories for which to collect the metrics, defined in a YAML file. The repositories need to be given as `{org-name}/{repo-name}`, (e.g. `sdv-dev/SDV`). See [daily.yaml](./daily.yaml) for an example.
+2. A list of GitHub Repositories for which to collect the metrics, defined in a YAML file. The repositories need to be given as `{org-name}/{repo-name}`, (e.g. `sdv-dev/SDV`). See [daily_summarization_config.yaml](./daily_summarization_config.yaml) for an example.
 3. (__Optional__) A filename where the output will be stored. If a name containing the `.xlsx`
    extension is given (like `path/to/my-filename.xlsx`), it will be used as provided.
    Otherwise, a filename will be created as `github-metrics-{name}-{today}.xlsx` within
@@ -77,7 +77,7 @@ Collect metrics from GitHub by running `gitmetrics` on your computer. You need t
 You can run gitmetrics with the following CLI command:
 
 ```shell
-gitmetrics collect --token {GITHUB_TOKEN} --add-metrics --config-file daily.yaml
+gitmetrics collect --token {GITHUB_TOKEN} --add-metrics --config-file daily_summarization_config.yaml
 ```
 
 ## Google Drive Integration
@@ -94,6 +94,6 @@ GitMetrics is capable of reading and writing results in Google Spreadsheets. The
    - See [instructions from PyDrive](https://pythonhosted.org/PyDrive/quickstart.html).
 
 ## Workflows
-1. **Weekly Collection**: On a weekly basis, this workflow collects GitHub metrics for the repositories defined in [weekly.yaml](./weekly.yaml).
-2. **Daily Collection**: On a daily basis, this workflow collects GitHub metrics for the repositories defined in [daily.yaml](./daily.yaml).
-3. **Daily Summarize**: On a daily basis, this workflow summarizes the GitHub metrics (from the daily collection). The summarized data is published to a GitHub repo: [GitHub_Summary.xlsx](https://github.com/sdv-dev/sdv-dev.github.io/blob/gatsby-home/assets/GitHub_Summary.xlsx)
+1. **Weekly Collection**: On a weekly basis, this workflow collects GitHub metrics for the repositories defined in [weekly_extraction_config.yaml](./weekly_extraction_config.yaml).
+2. **Daily Collection**: On a daily basis, this workflow collects GitHub metrics for the repositories defined in [daily_summarization_config.yaml](./daily_summarization_config.yaml).
+3. **Daily Summarize**: On a daily basis, this workflow summarizes the GitHub metrics (from the daily collection). The summarized data is published to a GitHub repo: [gitmetrics_growth_summary.xlsx](https://github.com/sdv-dev/sdv-dev.github.io/blob/gatsby-home/assets/gitmetrics_growth_summary.xlsx)
