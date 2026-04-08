@@ -87,10 +87,12 @@ def upload_spreadsheet(content, filename, folder):
 
     try:
         drive_file = _find_file(drive, filename, folder)
+        drive_file['mimeType'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     except FileNotFoundError:
         file_config = {'title': filename, 'parents': [{'id': folder}]}
         drive_file = drive.CreateFile(file_config)
 
+    content.seek(0)
     drive_file.content = content
     drive_file.Upload({'convert': True})
     LOGGER.info('Created file %s', drive_file.metadata['alternateLink'])
