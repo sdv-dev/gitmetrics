@@ -15,7 +15,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 LOGGER = logging.getLogger(__name__)
 
 TOTAL_COLUMN_NAME = 'Total Since Beginning'
-OUTPUT_FILENAME = 'GitHub_Summary'
+OUTPUT_FILENAME = 'gitmetrics_growth_summary'
 SHEET_NAMES = ['Unique users', 'User issues', 'vendor-mapping', 'metainfo']
 START_YEAR = 2021
 
