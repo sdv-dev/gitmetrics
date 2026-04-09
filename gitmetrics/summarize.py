@@ -55,7 +55,7 @@ def summarize_metrics(
             The folder containing the location of the collected GitHub metrics.
             The folder must only contain spreadsheet (xlsx) files.
             The name of each file must match the `github_org` (lowercase) in
-                summarize_project_definitions.yaml.
+                daily_summarization_config.yaml.
             The GitHub metrics are computed from the xlsx files in this folder.
 
         dry_run (bool):
