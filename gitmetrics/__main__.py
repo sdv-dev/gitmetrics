@@ -275,7 +275,7 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default='summarize_project_definitions.yaml',
+        default='daily_summarization_config.yaml',
         help='Path to the configuration file.',
     )
     summarize.add_argument(
