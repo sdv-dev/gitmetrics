@@ -1,0 +1,42 @@
+name: Monthly Collection
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '1 0 1 * *'   # Runs at 00:01 on the 1st day of every month
+
+jobs:
+  monthly_github_collection:
+    environment: monthly
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+        activate-environment: true
+
+    - name: Install dependencies
+      run: |
+        uv pip install .
+
+    - name: Collect GitHub Data
+      run: |
+        uv run gitmetrics collect -q \
+          --add-metrics \
+          --config-file monthly_extraction_config.yaml \
+          --token ${{ secrets.GITHUB_TOKEN }} \
+          --output-folder ${{ secrets.OUTPUT_FOLDER }}
+      env:
+        PYDRIVE_CREDENTIALS: ${{ secrets.PYDRIVE_CREDENTIALS }}
+
+    - name: Consolidate GitHub Data
+      run: |
+        uv run gitmetrics consolidate \
+          --config-file monthly_extraction_config.yaml \
+          --output-folder ${{ secrets.OUTPUT_FOLDER }}
+      env:
+        PYDRIVE_CREDENTIALS: ${{ secrets.PYDRIVE_CREDENTIALS }}
