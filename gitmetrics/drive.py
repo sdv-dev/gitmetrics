@@ -16,6 +16,7 @@ PYDRIVE_CREDENTIALS = 'PYDRIVE_CREDENTIALS'
 
 LOGGER = logging.getLogger(__name__)
 GDRIVE_LINK = 'gdrive://'
+MAX_UPLOAD_RETRIES = 10
 
 
 def is_drive_path(path):
@@ -91,9 +92,30 @@ def upload_spreadsheet(content, filename, folder):
         file_config = {'title': filename, 'parents': [{'id': folder}]}
         drive_file = drive.CreateFile(file_config)
 
+    content.seek(0)
     drive_file.content = content
-    drive_file.Upload({'convert': True})
-    LOGGER.info('Created file %s', drive_file.metadata['alternateLink'])
+
+    retries = 0
+    while retries != MAX_UPLOAD_RETRIES:
+        try:
+            if drive_file['mimeType'] == SPREADSHEET_MIMETYPE:
+                drive_file.Upload()
+            else:
+                drive_file.Upload({'convert': True})
+
+            LOGGER.info('Created file %s', drive_file.metadata['alternateLink'])
+            break
+        except Exception as e:
+            retries += 1
+            LOGGER.warning(
+                'Upload failed (%s/%s) for %s: %s',
+                retries,
+                MAX_UPLOAD_RETRIES,
+                drive_file.get('title', 'unknown'),
+                str(e),
+            )
+            if retries == MAX_UPLOAD_RETRIES:
+                raise
 
 
 def download_spreadsheet(folder, filename):
