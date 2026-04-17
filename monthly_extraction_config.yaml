@@ -1,0 +1,11 @@
+import_config: project_definitions.yaml
+projects:
+  huggingface:
+  grafana:
+  pandas:
+  airflow:
+  PyTorchLightning:
+  scikit-learn:
+  ray:
+  airbyte:
+  PyTorchLightning:

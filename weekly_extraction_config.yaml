@@ -1,21 +1,13 @@
 import_config: project_definitions.yaml
 projects:
-  PyTorchLightning:
-  airbyte:
-  airflow:
   dagster:
   dbt:
   determined:
   earthly:
   feast:
   featuretools:
-  grafana:
-  huggingface:
   mariadb:
-  pandas:
   prefect:
   pycaret:
-  ray:
-  scikit-learn:
   snorkel:
   spacy:
