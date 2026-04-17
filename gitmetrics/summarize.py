@@ -6,6 +6,7 @@ import os
 import pandas as pd
 
 from gitmetrics.constants import ECOSYSTEM_COLUMN_NAME
+from gitmetrics.drive import _get_drive_client, is_drive_path, split_drive_path
 from gitmetrics.output import create_spreadsheet, load_spreadsheet
 from gitmetrics.time_utils import get_current_year, get_dt_now_spelled_out, get_min_max_dt_in_year
 
@@ -118,9 +119,24 @@ def summarize_metrics(
         for sheet_name, df in sheets.items():
             LOGGER.info(f'Sheet Name: {sheet_name}')
             LOGGER.info(df.to_string())
+
     if not dry_run:
         # Write to local directory
         output_path = os.path.join(dir_path, OUTPUT_FILENAME)
+        create_spreadsheet(output_path=output_path, sheets=sheets)
+
+    if is_drive_path(input_folder):
+        drive = _get_drive_client()
+        gdrive_folder = input_folder.rstrip('/') + '/'
+        folder_id, _ = split_drive_path(gdrive_folder)
+
+        folder = drive.CreateFile({'id': folder_id})
+        folder.FetchMetadata(fields='parents')
+
+        parents = folder.get('parents') or []
+        parent_id = parents[0].get('id')
+
+        output_path = f'gdrive://{parent_id}/{OUTPUT_FILENAME}'
         create_spreadsheet(output_path=output_path, sheets=sheets)
 
 
