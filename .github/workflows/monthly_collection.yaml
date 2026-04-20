@@ -8,7 +8,7 @@ on:
 
 jobs:
   monthly_github_collection:
-    environment: monthly
+    environment: weekly
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
