@@ -12,6 +12,7 @@ from gitmetrics.constants import (
     METRICS_SHEET_NAME,
     VALUE_COLUMN_NAME,
 )
+from gitmetrics.drive import _get_drive_client, is_drive_path, split_drive_path
 from gitmetrics.output import create_spreadsheet, load_spreadsheet
 
 OUTPUT_FILENAME = 'gitmetrics_consolidated_summary_to_date'
@@ -62,6 +63,21 @@ def consolidate_metrics(projects, output_folder, dry_run=False, verbose=True):
     if verbose:
         LOGGER.info(f'Sheet Name: {SHEET_NAME}')
         LOGGER.info(consolidated_df.to_string())
+
     if not dry_run:
         output_path = os.path.join(output_folder, OUTPUT_FILENAME)
+        create_spreadsheet(output_path=output_path, sheets=sheets)
+
+    if is_drive_path(output_folder):
+        drive = _get_drive_client()
+        gdrive_folder = output_folder.rstrip('/') + '/'
+        folder_id, _ = split_drive_path(gdrive_folder)
+
+        folder = drive.CreateFile({'id': folder_id})
+        folder.FetchMetadata(fields='parents')
+
+        parents = folder.get('parents') or []
+        parent_id = parents[0].get('id')
+
+        output_path = f'gdrive://{parent_id}/{OUTPUT_FILENAME}'
         create_spreadsheet(output_path=output_path, sheets=sheets)
