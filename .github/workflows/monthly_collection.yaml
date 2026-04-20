@@ -8,7 +8,7 @@ on:
 
 jobs:
   monthly_github_collection:
-    environment: monthly
+    environment: weekly
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -36,7 +36,7 @@ jobs:
     - name: Consolidate GitHub Data
       run: |
         uv run gitmetrics consolidate \
-          --config-file monthly_extraction_config.yaml \
+          --config-file weekly_extraction_config.yaml monthly_extraction_config.yaml \
           --output-folder ${{ secrets.OUTPUT_FOLDER }}
       env:
         PYDRIVE_CREDENTIALS: ${{ secrets.PYDRIVE_CREDENTIALS }}

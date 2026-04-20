@@ -98,7 +98,7 @@ def upload_spreadsheet(content, filename, folder):
     retries = 0
     while retries != MAX_UPLOAD_RETRIES:
         try:
-            if drive_file['mimeType'] == SPREADSHEET_MIMETYPE:
+            if drive_file.get('mimeType') == SPREADSHEET_MIMETYPE:
                 drive_file.Upload()
             else:
                 drive_file.Upload({'convert': True})

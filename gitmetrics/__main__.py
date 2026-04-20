@@ -140,11 +140,13 @@ def _summarize(args, parser):
 
 
 def _consolidate(args, parser):
-    config = _load_config(args.config_file)
-    projects = config['projects']
+    all_projects = []
+    for config_file in args.config_file:
+        config = _load_config(config_file)
+        all_projects.extend(config.get('projects', []))
 
     consolidate_metrics(
-        projects=projects,
+        projects=all_projects,
         output_folder=args.output_folder,
         dry_run=args.dry_run,
         verbose=args.verbose,
@@ -223,8 +225,9 @@ def _get_parser():
         '-c',
         '--config-file',
         type=str,
-        default=DEFAULT_PROJECT_DEFINITIONS,
-        help='Path to the configuration file.',
+        nargs='+',
+        default=[DEFAULT_PROJECT_DEFINITIONS],
+        help='Path(s) to configuration file(s).',
     )
     consolidate.add_argument(
         '-d',
