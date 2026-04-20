@@ -8,4 +8,3 @@ projects:
   scikit-learn:
   ray:
   airbyte:
-  PyTorchLightning:
