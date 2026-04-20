@@ -56,6 +56,7 @@ def consolidate_metrics(projects, output_folder, dry_run=False, verbose=True):
         row_info.update(row_values)
         if verbose:
             LOGGER.info(f' {project} values: {row_info}')
+
         rows.append(row_info)
 
     consolidated_df = pd.DataFrame(rows)
@@ -66,7 +67,6 @@ def consolidate_metrics(projects, output_folder, dry_run=False, verbose=True):
 
     if not dry_run:
         output_path = os.path.join(output_folder, OUTPUT_FILENAME)
-        create_spreadsheet(output_path=output_path, sheets=sheets)
 
     if is_drive_path(output_folder):
         drive = _get_drive_client()
@@ -80,4 +80,7 @@ def consolidate_metrics(projects, output_folder, dry_run=False, verbose=True):
         parent_id = parents[0].get('id')
 
         output_path = f'gdrive://{parent_id}/{OUTPUT_FILENAME}'
+        create_spreadsheet(output_path=output_path, sheets=sheets)
+
+    else:
         create_spreadsheet(output_path=output_path, sheets=sheets)
