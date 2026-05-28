@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         enable-cache: true
         activate-environment: true
@@ -27,7 +27,7 @@ jobs:
           --input-folder ${{ secrets.OUTPUT_FOLDER }}
       env:
         PYDRIVE_CREDENTIALS: ${{ secrets.PYDRIVE_CREDENTIALS }}
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         repository: sdv-dev/sdv-dev.github.io
         path: sdv-dev.github.io
@@ -50,9 +50,9 @@ jobs:
     timeout-minutes: 5
     if: failure()
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install uv
-      uses: astral-sh/setup-uv@v6
+      uses: astral-sh/setup-uv@v7
       with:
         enable-cache: true
         activate-environment: true
