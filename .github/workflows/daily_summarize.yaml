@@ -44,18 +44,3 @@ jobs:
         git commit -m "Upload GitHub Summary - $(date '+%Y-%m-%d %H:%M:%S')"
         git remote set-url origin https://sdv-team:${{ secrets.GH_TOKEN }}@github.com/sdv-dev/sdv-dev.github.io
         git push origin gatsby-home
-  alert:
-    needs: [summarize]
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: failure()
-    steps:
-    - uses: actions/checkout@v6
-    - name: Install uv
-      uses: astral-sh/setup-uv@v7
-      with:
-        enable-cache: true
-        activate-environment: true
-    - name: Install dependencies
-      run: |
-        uv pip install .[dev]
