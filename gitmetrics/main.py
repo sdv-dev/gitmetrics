@@ -8,7 +8,7 @@ import pandas as pd
 
 from gitmetrics.constants import METRICS_SHEET_NAME
 from gitmetrics.drive import get_or_create_gdrive_folder
-from gitmetrics.github.repository import RepositoryClient, STARGAZERS_COLUMNS
+from gitmetrics.github.repository import STARGAZERS_COLUMNS, RepositoryClient
 from gitmetrics.github.repository_owner import RepositoryOwnerClient
 from gitmetrics.github.traffic import TrafficClient
 from gitmetrics.github.users import UsersClient

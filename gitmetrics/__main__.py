@@ -212,12 +212,7 @@ def _get_parser():
     collect.add_argument(
         '-m', '--add-metrics', action='store_true', help='Whether to add a metrics tab.'
     )
-    collect.add_argument(
-        '-r',
-        '--repositories',
-        nargs='*',
-        help='List of repositories to add.'
-    )
+    collect.add_argument('-r', '--repositories', nargs='*', help='List of repositories to add.')
     collect.add_argument(
         '-n',
         '--not-incremental',
