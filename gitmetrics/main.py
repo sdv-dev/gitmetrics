@@ -8,7 +8,7 @@ import pandas as pd
 
 from gitmetrics.constants import METRICS_SHEET_NAME
 from gitmetrics.drive import get_or_create_gdrive_folder
-from gitmetrics.github.repository import RepositoryClient
+from gitmetrics.github.repository import RepositoryClient, STARGAZERS_COLUMNS
 from gitmetrics.github.repository_owner import RepositoryOwnerClient
 from gitmetrics.github.traffic import TrafficClient
 from gitmetrics.github.users import UsersClient
@@ -61,7 +61,14 @@ def _get_repository_data(token, repository, previous=None, quiet=False):
     pull_requests = repo_client.get_pull_requests()
     pull_requests.insert(1, 'repository', repository)
 
-    stargazers = repo_client.get_stargazers()
+    try:
+        stargazers = repo_client.get_stargazers()
+    except Exception:
+        # Stargazer information is available only for repositories that we own
+        # In order to continue with the flow without breaking we create an empty
+        # dataframe with the expected columns.
+        stargazers = pd.DataFrame(columns=STARGAZERS_COLUMNS)
+
     stargazers.insert(1, 'repository', repository)
 
     return issues, pull_requests, stargazers

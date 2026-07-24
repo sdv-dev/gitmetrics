@@ -67,7 +67,11 @@ def _collect(args, parser):
         elif len(args.projects) > 1:
             parser.error('If repositories are given, only one project name must be provided.')
 
-        projects = {args.projects[0]: args.repositories}
+        projects = {
+            args.projects[0]: [
+                f'{args.projects[0]}/{repository}' for repository in args.repositories
+            ]
+        }
 
     elif not args.projects:
         projects = config_projects
@@ -208,7 +212,12 @@ def _get_parser():
     collect.add_argument(
         '-m', '--add-metrics', action='store_true', help='Whether to add a metrics tab.'
     )
-    collect.add_argument('-r', '--repositories', nargs='*', help='List of repositories to add.')
+    collect.add_argument(
+        '-r',
+        '--repositories',
+        nargs='*',
+        help='List of repositories to add.'
+    )
     collect.add_argument(
         '-n',
         '--not-incremental',

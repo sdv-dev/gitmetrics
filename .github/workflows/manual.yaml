@@ -1,0 +1,42 @@
+name: Manual collection
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Name of the project to collect'
+        required: true
+        default: ''
+      repositories:
+        description: 'List of repositories to collect, separated by spaces'
+        required: false
+        default: ''
+      extras:
+        description: 'Extra arguments to pass (e.g. --not-incremental --add-metrics)'
+        required: false
+        default: '--not-incremental --add-metrics'
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+    - uses: actions/checkout@v6
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: true
+        activate-environment: true
+    - name: Install dependencies
+      run: |
+        uv pip install .
+    - name: Collect Github Data
+      run: |
+        uv run gitmetrics collect -v -q \
+          -t ${{ secrets.GITHUB_TOKEN }} \
+          -p ${{ github.event.inputs.project }} \
+          -r ${{ github.event.inputs.repositories }} \
+          -o gdrive://${{ secrets.MANUAL_OUTPUT_FOLDER }} \
+          ${{ github.event.inputs.extras }}
+      env:
+        PYDRIVE_CREDENTIALS: ${{ secrets.PYDRIVE_CREDENTIALS }}
