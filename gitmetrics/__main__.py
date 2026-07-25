@@ -67,7 +67,11 @@ def _collect(args, parser):
         elif len(args.projects) > 1:
             parser.error('If repositories are given, only one project name must be provided.')
 
-        projects = {args.projects[0]: args.repositories}
+        projects = {
+            args.projects[0]: [
+                f'{args.projects[0]}/{repository}' for repository in args.repositories
+            ]
+        }
 
     elif not args.projects:
         projects = config_projects
