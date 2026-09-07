@@ -5,7 +5,7 @@ import pandas as pd
 from gitmetrics.constants import METRIC_COLUMN_NAME, VALUE_COLUMN_NAME
 
 
-def compute_metrics(issues, pull_requests, users, contributors, stargazers):
+def compute_metrics(issues, pull_requests, users, contributors, stargazers, stargazers_count=0):
     """Compute metrics for the given data.
 
     Args:
@@ -30,7 +30,7 @@ def compute_metrics(issues, pull_requests, users, contributors, stargazers):
     num_pull_requests = len(pull_requests)
     num_users = len(users)
     num_contributors = len(contributors)
-    num_stargazers = len(stargazers)
+    num_stargazers = len(stargazers) or stargazers_count
     non_contrib_users = users[~users.user.isin(contributors.user)]
     num_non_contrib_users = len(non_contrib_users)
     non_contrib_stars = stargazers[~stargazers.user.isin(contributors.user)]
