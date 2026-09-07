@@ -70,8 +70,9 @@ def _get_repository_data(token, repository, previous=None, quiet=False):
         stargazers = pd.DataFrame(columns=STARGAZERS_COLUMNS)
 
     stargazers.insert(1, 'repository', repository)
+    stargazers_count = repo_client.get_stargazer_count()
 
-    return issues, pull_requests, stargazers
+    return issues, pull_requests, stargazers, stargazers_count
 
 
 def _get_repositories_list(token, owner, quiet=False):
@@ -206,14 +207,16 @@ def collect_project_metrics(
         else:
             all_repositories.extend(_get_repositories_list(token, repository, quiet))
 
+    repo_stargazers_count = []
     for repository in all_repositories:
         try:
-            issues, pull_requests, stargazers = _get_repository_data(
+            issues, pull_requests, stargazers, stargazers_count = _get_repository_data(
                 token=token, repository=repository, previous=previous, quiet=quiet
             )
             all_issues = pd.concat([all_issues, issues], ignore_index=True)
             all_pull_requests = pd.concat([all_pull_requests, pull_requests], ignore_index=True)
             all_stargazers = pd.concat([all_stargazers, stargazers], ignore_index=True)
+            repo_stargazers_count.append(stargazers_count)
 
         except Exception:
             LOGGER.info(f'Failed to get repository data: {repository}.')
@@ -234,7 +237,14 @@ def collect_project_metrics(
         'Unique Stargazers': stargazers,
     }
     if add_metrics:
-        metrics = compute_metrics(issues, pull_requests, users, contributors, stargazers)
+        metrics = compute_metrics(
+            issues,
+            pull_requests,
+            users,
+            contributors,
+            stargazers,
+            stargazers_count=sum(repo_stargazers_count),
+        )
         sheets = dict({METRICS_SHEET_NAME: metrics}, **sheets)
 
     if output_path:
