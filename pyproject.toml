@@ -10,7 +10,7 @@ readme = "README.md"
 authors = [
     { name = "DataCebo", email = "info@datacebo.com" }
 ]
-requires-python = ">=3.13"
+requires-python = "3.14"
 license = "MIT"
 license-files = ["LICENSE"]
 classifiers = [
@@ -18,7 +18,7 @@ classifiers = [
     'Intended Audience :: Developers',
     'Natural Language :: English',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
     "Topic :: Scientific/Engineering",
 ]
 dependencies = [
